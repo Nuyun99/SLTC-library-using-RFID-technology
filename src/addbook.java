@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
 
 
-public class SearchBook extends JFrame implements ActionListener{
+public class addbook extends JFrame implements ActionListener{
 	
 	 JTextField rollText;
 	 JTextField nameText;
@@ -28,7 +28,7 @@ public class SearchBook extends JFrame implements ActionListener{
 	 JButton submitBtn; 
 	 
 	
-	SearchBook() {
+	addbook() {
 		
 		ImageIcon book = new ImageIcon("largebook.png");
 		

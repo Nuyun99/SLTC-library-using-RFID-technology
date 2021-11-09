@@ -125,6 +125,7 @@ public class adminview extends JFrame implements ActionListener {
 		delusrBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		delusrBtn.setFocusable(false);
 		delusrBtn.setBorder(null);
+		delusrBtn.addActionListener(this);
 		delusrBtn.setBackground(new Color(0x1754f1));
 		delusrBtn.setBounds(10, 141, 155, 21);
 		delusrPanel.add(delusrBtn);
@@ -199,38 +200,34 @@ public class adminview extends JFrame implements ActionListener {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {//logout button functionality
+	public void actionPerformed(ActionEvent e) {// button functionalities
 		
-		if(e.getSource()== logoutBtn) {
+		if(e.getSource()== logoutBtn) {//logout button functionality
 			this.dispose();
 			new adminpanel();
+			
 		}
 		
-		if(e.getSource()== addbkBtn) {
+		if(e.getSource()== addbkBtn) {//add book button
 			this.dispose();
-			SearchBook book = new SearchBook();
+			addbook book = new addbook();
 		}
-		if(e.getSource()==addusrBtn) {
+		
+		if(e.getSource()==addusrBtn) {// add user button
 			this.dispose();
 			adduser user = new adduser();
 		}
-	}
-	public void actionPerformed2(ActionEvent e) {
 		
-	}
-	
+		if(e.getSource()==delusrBtn) {// add user button
+			this.dispose();
+			updateuser userDel = new updateuser();
+		}
 		
-	public void actionPerformed3(ActionEvent e) {//add book button functionality
-		
-	}
-	
-	public void actionPerformed7(ActionEvent e) {//exit button functionalities
-		if(e.getSource()== exitBtn) {
+		if(e.getSource()== exitBtn) {//exit button
 			System.exit(0);
-			
 		}
 	}
-
+	
 
 	
 	
