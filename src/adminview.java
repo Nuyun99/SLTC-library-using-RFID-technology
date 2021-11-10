@@ -16,11 +16,11 @@ public class adminview extends JFrame implements ActionListener {
 	
 	adminview(){
 		setResizable(false);
-		getContentPane().setBackground(new Color(0x5b6c8b));
+		getContentPane().setBackground(new Color(0x5B6C8B));
 		
 		ImageIcon bookImg = new ImageIcon("book1.png");
 		Image image = bookImg.getImage();
-		Image newimg = image.getScaledInstance(128, 128,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+		Image newimg = image.getScaledInstance(135, 135,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
 		bookImg = new ImageIcon(newimg);
 		ImageIcon srchImg = new ImageIcon("search.png");
 		ImageIcon adbkImg = new ImageIcon("adbk.png");
@@ -29,6 +29,10 @@ public class adminview extends JFrame implements ActionListener {
 		ImageIcon infoImg = new ImageIcon("aboutus.png");
 		ImageIcon exitImg = new ImageIcon("exit.png");
 		ImageIcon logoutImg = new ImageIcon("logout.png");
+		image = logoutImg.getImage();
+		newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+		logoutImg = new ImageIcon(newimg);
+
 		
 		this.setBounds(100, 100, 972, 699);//this key word replace Frame name
 		this.setUndecorated(true);//title bar disappear
@@ -37,172 +41,140 @@ public class adminview extends JFrame implements ActionListener {
 		this.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();//upper jPannel
-		panel.setBackground(new Color(0x1754f1));
+		panel.setBackground(new Color(0xF50097EE));
 		panel.setBounds(0, 0, 972, 205);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel upLabel = new JLabel();//upper JLabel contains Text
 		upLabel.setBackground(Color.WHITE);
-		upLabel.setForeground(new Color(255, 255, 255));
+		upLabel.setForeground(new Color(232, 235, 243));
 		upLabel.setBounds(235, 48, 635, 94);
 		panel.add(upLabel);
-		upLabel.setText("Library Mangemenet System");
+		upLabel.setText("Library Management System");
 		upLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 53));
 		
 		JLabel upImgLabel = new JLabel();//upper JLabel contains Image
 		upImgLabel.setBounds(83, 35, 135, 135);
-		upImgLabel.setBackground(new Color(0xFFFFFFFF, true));
-		upImgLabel.setOpaque(true);
 		upImgLabel.setIcon(bookImg);
 		panel.add(upImgLabel);
-		
+
+
 		logoutBtn = new JButton();
 		logoutBtn.addActionListener(this);
-		logoutBtn.setBounds(942, 0, 30, 30);
+		logoutBtn.setBounds(5, 2, 30, 30);
 		logoutBtn.setBorder(null);
-		logoutBtn.setBackground(new Color(0x1754f1));
+		logoutBtn.setBackground(new Color(0xF50097EE));
 		logoutBtn.setIcon(logoutImg);
 		panel.add(logoutBtn);
-		
+
+
 		JPanel srchPanel = new JPanel();//search book panel
-		srchPanel.setBounds(397, 454, 175, 183);
-		srchPanel.setBackground(new Color(0x1754f1));
+		srchPanel.setBounds(398, 454, 175, 183);
+		srchPanel.setBackground(new Color(0xF50097EE));
 		getContentPane().add(srchPanel);
 		srchPanel.setLayout(null);
 		
-		JLabel srchLabel = new JLabel();//search book icon label
-		srchLabel.setBounds(57, 44, 64, 64);
-		srchLabel.setIcon(srchImg);
-		srchPanel.add(srchLabel);
-		
-		srchBtn = new JButton();//search book panel button
+		srchBtn = new JButton("<html><br><br>Search Book</html>",srchImg);//search book panel button
 		srchBtn.setForeground(Color.WHITE);
 		srchBtn.setFont(new Font("Verdana", Font.BOLD, 12));
-		srchBtn.setBounds(28, 133, 119, 24);
-		srchBtn.setText("Search Book");
-		srchBtn.setBorder(null);
-		srchBtn.setBackground(new Color(23, 84, 241));
-		srchBtn.addActionListener(this);
+		srchBtn.setBounds(0, 0, 175, 183);
+		srchBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		srchBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+		srchBtn.setBackground(new Color(0xF50097EE));
 		srchBtn.setFocusable(false);
 		srchPanel.add(srchBtn);
-		
+
+
 		JPanel addbkPanel = new JPanel();//add book JPanel
-		addbkPanel.setBackground(new Color(0x1754f1));
-		addbkPanel.setBounds(397, 244, 175, 183);
+		addbkPanel.setBackground(new Color(0xF50097EE));
+		addbkPanel.setBounds(398, 244, 175, 183);
 		getContentPane().add(addbkPanel);
 		addbkPanel.setLayout(null);
 		
-		JLabel addbkLabel = new JLabel();//add book icon label
-		addbkLabel.setBounds(56, 45, 64, 64);
-		addbkLabel.setIcon(adbkImg);
-		addbkPanel.add(addbkLabel);
-		
-		addbkBtn = new JButton();//add book button
-		addbkBtn.setText("Add Book");
+		addbkBtn = new JButton("<html><br><br>Add Book</html>",adbkImg);//add book button
 		addbkBtn.setForeground(Color.WHITE);
 		addbkBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		addbkBtn.setFocusable(false);
-		addbkBtn.setBorder(null);
 		addbkBtn.addActionListener(this);//since this keyword for our actionlistner interface
-		addbkBtn.setBackground(new Color(0x1754f1));
-		addbkBtn.setBounds(34, 139, 104, 21);
+		addbkBtn.setBackground(new Color(0xF50097EE));
+		addbkBtn.setBounds(0, 0, 175, 183);
+		addbkBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		addbkBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		addbkPanel.add(addbkBtn);
+
 		
 		JPanel delusrPanel = new JPanel();//update or delete user JPanel
-		delusrPanel.setBackground(new Color(0x1754f1));
+		delusrPanel.setBackground(new Color(0xF50097EE));
 		delusrPanel.setBounds(695, 244, 175, 183);
 		getContentPane().add(delusrPanel);
 		delusrPanel.setLayout(null);
-		
-		JLabel delusrLabel = new JLabel();//update or delete user Icon Label
-		delusrLabel.setBounds(58, 43, 64, 64);
-		delusrLabel.setIcon(dltImg);
-		delusrPanel.add(delusrLabel);
-		
-		delusrBtn = new JButton();//update or delete user button
-		delusrBtn.setText("Update/Delete User");
+
+		delusrBtn = new JButton("<html><br><br>Update/Delete User</html>",dltImg);//update or delete user button
 		delusrBtn.setForeground(Color.WHITE);
 		delusrBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		delusrBtn.setFocusable(false);
-		delusrBtn.setBorder(null);
 		delusrBtn.addActionListener(this);
-		delusrBtn.setBackground(new Color(0x1754f1));
-		delusrBtn.setBounds(10, 141, 155, 21);
+		delusrBtn.setBackground(new Color(0xF50097EE));
+		delusrBtn.setBounds(0, 0, 175, 183);
+		delusrBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		delusrBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		delusrPanel.add(delusrBtn);
-		
+
+
 		JPanel lendbkPanel = new JPanel();//lend book JPanel
-		lendbkPanel.setBackground(new Color(0x1754f1));
+		lendbkPanel.setBackground(new Color(0xF50097EE));
 		lendbkPanel.setBounds(100, 454, 175, 183);
 		getContentPane().add(lendbkPanel);
 		lendbkPanel.setLayout(null);
 		
-		JLabel lendbkLabel = new JLabel();//lend book Icon Label
-		lendbkLabel.setBounds(57, 43, 64, 64);
-		lendbkLabel.setIcon(lendImg);
-		lendbkPanel.add(lendbkLabel);
-		
-		lendbkBtn = new JButton();//lend book button
-		lendbkBtn.setText("Lend Book");
+		lendbkBtn = new JButton("<html><br><br>Lend Book</html>",lendImg);//lend book button
 		lendbkBtn.setForeground(Color.WHITE);
 		lendbkBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		lendbkBtn.setFocusable(false);
-		lendbkBtn.setBorder(null);
-		lendbkBtn.setBackground(new Color(0x1754f1));
-		lendbkBtn.setBounds(27, 138, 119, 21);
+		lendbkBtn.setBackground(new Color(0xF50097EE));
+		lendbkBtn.setBounds(0, 0, 175, 183);
+		lendbkBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lendbkBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		lendbkPanel.add(lendbkBtn);
-		this.setVisible(true);
-		
-		
+
+
 		JPanel addusrPanel = new JPanel();//add usr JPanel
-		addusrPanel.setBackground(new Color(0x1754f1));
+		addusrPanel.setBackground(new Color(0xF50097EE));
 		addusrPanel.setBounds(100, 244, 175, 183);
 		getContentPane().add(addusrPanel);
 		addusrPanel.setLayout(null);
-		
-		JLabel addusrLabel = new JLabel();//about us Icon Label
-		addusrLabel.setBounds(54, 41, 64, 64);
-		addusrLabel.setIcon(infoImg);
-		addusrPanel.add(addusrLabel);
-		
-		addusrBtn = new JButton();//about us button
-		addusrBtn.setText("Add User");
+
+		addusrBtn = new JButton("<html><br><br>Add User</html>",infoImg);//about us button
 		addusrBtn.setForeground(Color.WHITE);
 		addusrBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		addusrBtn.setFocusable(false);
-		addusrBtn.setBorder(null);
 		addusrBtn.addActionListener(this);
-		addusrBtn.setBackground(new Color(0x1754f1));
-		addusrBtn.setBounds(28, 138, 119, 21);
+		addusrBtn.setBackground(new Color(0xF50097EE));
+		addusrBtn.setBounds(0, 0, 175, 183);
+		addusrBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		addusrBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		addusrPanel.add(addusrBtn);
-		
+
+
 		JPanel exitPanel = new JPanel();//exit program JPanel
-		exitPanel.setLayout(null);
-		exitPanel.setBackground(new Color(0x1754f1));
+		exitPanel.setBackground(new Color(0xF50097EE));
 		exitPanel.setBounds(695, 454, 175, 183);
 		getContentPane().add(exitPanel);
-
-//		JLabel exitLabel = new JLabel();//exit program Icon Label
-//		exitLabel.setBounds(58, 48, 64, 64);
-//		//exitLabel.setIcon(exitImg);
-//		exitPanel.add(exitLabel);
+		exitPanel.setLayout(null);
 
 		exitBtn = new JButton("<html><br><br>Exit Program</html>",exitImg);//exit program button
-		//xitBtn.setText("Exit Program");
-		exitBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
-		exitBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		exitBtn.setForeground(Color.WHITE);
+		exitBtn.setForeground(new Color(0xFFFFFFFF));
 		exitBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		exitBtn.setFocusable(false);
-		exitBtn.setBorder(null);
-		exitBtn.setBackground(new Color(0x1754f1));
-		exitBtn.setBounds(0, 0, 175, 183);
 		exitBtn.addActionListener(this);
+		exitBtn.setBackground(new Color(0xF50097EE));
+		exitBtn.setBounds(0, 0, 175, 183);
+		exitBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		exitBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		exitPanel.add(exitBtn);
 
-
-
-		
+		this.setVisible(true);
 	}
 	
 	@Override
@@ -227,11 +199,6 @@ public class adminview extends JFrame implements ActionListener {
 		if(e.getSource()==delusrBtn) {// add user button
 			this.dispose();
 			updateuser userDel = new updateuser();
-		}
-		
-		if(e.getSource()==srchBtn) {//search button
-			this.dispose();
-			searchbook srch = new searchbook();
 		}
 		
 		if(e.getSource()== exitBtn) {//exit button
