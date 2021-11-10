@@ -1,5 +1,4 @@
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,6 +34,9 @@ public class searchbook extends JFrame implements ActionListener{
 		ImageIcon src = new ImageIcon("src.png");
 		
 		ImageIcon back = new ImageIcon("back.png");
+		Image image = back.getImage();
+		Image newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+		back = new ImageIcon(newimg);
 
 		this.setBounds(100, 100, 895, 664);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,7 +47,7 @@ public class searchbook extends JFrame implements ActionListener{
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 904, 124);
-		panel.setBackground(new Color(0x1754f1));
+		panel.setBackground(new Color(0xF50097EE));
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -63,8 +65,8 @@ public class searchbook extends JFrame implements ActionListener{
 		backBtn = new JButton();
 		backBtn.setFocusable(false);
 		backBtn.setBorder(null);
-		backBtn.setBackground(new Color(23, 84, 241));
-		backBtn.setBounds(0, 0, 30, 30);
+		backBtn.setBackground(new Color(0xF50097EE));
+		backBtn.setBounds(5, 5, 30, 30);
 		backBtn.setIcon(back);
 		backBtn.addActionListener(this);
 		panel.add(backBtn);
@@ -107,7 +109,7 @@ public class searchbook extends JFrame implements ActionListener{
 		bottomPanel.add(srchBtn);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBackground(new Color(0x5b6c8b));
+		scrollPane.setBackground(new Color(0x5B6C8B));
 		scrollPane.setBounds(27, 232, 834, 410);
 		getContentPane().add(scrollPane);
 		
@@ -124,7 +126,7 @@ public class searchbook extends JFrame implements ActionListener{
 		//table.setBackground(new Color(0x5b6c8b));//whenever row is added row color is this
 		table.setForeground(Color.GRAY);//row text color is this
 		table.setRowHeight(60);//row height
-		table.setSelectionBackground(new Color(0x1754f1));//this will change color when select row
+		table.setSelectionBackground(new Color(0xF50097EE));//this will change color when select row
 		table.setShowVerticalLines(false);//not show vertical lines
 		
 		/*edit table header*/

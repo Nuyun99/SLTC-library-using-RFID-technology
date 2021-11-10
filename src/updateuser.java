@@ -1,6 +1,5 @@
-import java.awt.Color;
-	import java.awt.Font;
-	import javax.swing.ImageIcon;
+import java.awt.*;
+import javax.swing.ImageIcon;
 	import javax.swing.JFrame;
 	import javax.swing.JLabel;
 	import javax.swing.JPanel;
@@ -41,6 +40,9 @@ import javax.swing.JSeparator;
 			ImageIcon src = new ImageIcon("src.png");
 			
 			ImageIcon back = new ImageIcon("back.png");
+			Image image = back.getImage();
+			Image newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+			back = new ImageIcon(newimg);
 
 			this.setBounds(100, 100, 895, 664);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +52,7 @@ import javax.swing.JSeparator;
 			
 			JPanel panel = new JPanel();
 			panel.setBounds(0, 0, 904, 124);
-			panel.setBackground(new Color(0x1754f1));
+			panel.setBackground(new Color(0xF50097EE));
 			getContentPane().add(panel);
 			panel.setLayout(null);
 			
@@ -69,9 +71,9 @@ import javax.swing.JSeparator;
 			backBtn.setFocusable(false);
 			backBtn.setBorder(null);
 			backBtn.addActionListener(this);
-			backBtn.setBackground(new Color(23, 84, 241));
+			backBtn.setBackground(new Color(0xF50097EE));
 			backBtn.setIcon(back);
-			backBtn.setBounds(0, 0, 30, 30);
+			backBtn.setBounds(5, 5, 30, 30);
 			panel.add(backBtn);
 			
 			JLabel nameLabel = new JLabel("Name");
@@ -84,7 +86,7 @@ import javax.swing.JSeparator;
 			nameText.setForeground(Color.WHITE);
 			nameText.setColumns(10);
 			nameText.setBorder(new LineBorder(Color.BLACK, 2));
-			nameText.setBackground(new Color(91, 108, 139));
+			nameText.setBackground(new Color(0x5B6C8B));
 			nameText.setBounds(78, 281, 290, 29);
 			getContentPane().add(nameText);
 			
@@ -98,7 +100,7 @@ import javax.swing.JSeparator;
 			emailText.setForeground(Color.WHITE);
 			emailText.setColumns(10);
 			emailText.setBorder(new LineBorder(Color.BLACK, 2));
-			emailText.setBackground(new Color(91, 108, 139));
+			emailText.setBackground(new Color(0x5B6C8B));
 			emailText.setBounds(78, 373, 290, 29);
 			getContentPane().add(emailText);
 			
@@ -106,7 +108,7 @@ import javax.swing.JSeparator;
 			addressText.setForeground(Color.WHITE);
 			addressText.setColumns(10);
 			addressText.setBorder(new LineBorder(Color.BLACK, 2));
-			addressText.setBackground(new Color(91, 108, 139));
+			addressText.setBackground(new Color(0x5B6C8B));
 			addressText.setBounds(78, 460, 290, 29);
 			getContentPane().add(addressText);
 			
@@ -162,7 +164,7 @@ import javax.swing.JSeparator;
 			phoneText.setForeground(Color.WHITE);
 			phoneText.setColumns(10);
 			phoneText.setBorder(new LineBorder(Color.BLACK, 2));
-			phoneText.setBackground(new Color(91, 108, 139));
+			phoneText.setBackground(new Color(0x5B6C8B));
 			phoneText.setBounds(78, 542, 290, 29);
 			getContentPane().add(phoneText);
 			
@@ -176,7 +178,7 @@ import javax.swing.JSeparator;
 			yearText.setForeground(Color.WHITE);
 			yearText.setColumns(10);
 			yearText.setBorder(new LineBorder(Color.BLACK, 2));
-			yearText.setBackground(new Color(91, 108, 139));
+			yearText.setBackground(new Color(0x5B6C8B));
 			yearText.setBounds(469, 281, 290, 29);
 			getContentPane().add(yearText);
 			
@@ -190,7 +192,7 @@ import javax.swing.JSeparator;
 			nicText.setForeground(Color.WHITE);
 			nicText.setColumns(10);
 			nicText.setBorder(new LineBorder(Color.BLACK, 2));
-			nicText.setBackground(new Color(91, 108, 139));
+			nicText.setBackground(new Color(0x5B6C8B));
 			nicText.setBounds(469, 373, 290, 29);
 			getContentPane().add(nicText);
 			
@@ -198,7 +200,7 @@ import javax.swing.JSeparator;
 			dobText.setForeground(Color.WHITE);
 			dobText.setColumns(10);
 			dobText.setBorder(new LineBorder(Color.BLACK, 2));
-			dobText.setBackground(new Color(91, 108, 139));
+			dobText.setBackground(new Color(0x5B6C8B));
 			dobText.setBounds(469, 460, 290, 29);
 			getContentPane().add(dobText);
 			
@@ -213,7 +215,7 @@ import javax.swing.JSeparator;
 			submitBtn.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 			submitBtn.setFocusable(false);
 			submitBtn.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
-			submitBtn.setBackground(new Color(242, 12, 39));
+			submitBtn.setBackground(Color.RED);
 			submitBtn.setBounds(641, 604, 118, 29);
 			getContentPane().add(submitBtn);
 			
@@ -236,7 +238,7 @@ import javax.swing.JSeparator;
 			updateBtn.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 			updateBtn.setFocusable(false);
 			updateBtn.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
-			updateBtn.setBackground(Color.DARK_GRAY);
+			updateBtn.setBackground(new Color(0x3edad8));
 			updateBtn.setBounds(504, 604, 118, 29);
 			getContentPane().add(updateBtn);
 			

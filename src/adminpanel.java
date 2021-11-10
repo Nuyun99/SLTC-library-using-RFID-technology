@@ -18,8 +18,7 @@ import javax.swing.JSeparator;
 import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 
-public class adminpanel extends JFrame implements ActionListener {//extend jframe class and actionlistener interface
-	
+public class adminpanel extends JFrame implements ActionListener  {//extend jframe class and actionlistener interface
 	//if this order changes program willl be fucked up
 	
 	JLabel usridLabel;
@@ -29,7 +28,7 @@ public class adminpanel extends JFrame implements ActionListener {//extend jfram
 	JSeparator usrSeparator;
 	JTextField usridField;
 	JPasswordField passwordField;
-	
+
 
 
 	adminpanel(){
@@ -158,11 +157,9 @@ public class adminpanel extends JFrame implements ActionListener {//extend jfram
 		loginBtn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
 		loginBtn.setBackground(new Color(242, 12, 39));
 		loginBtn.setFocusable(false);
-		
-		
-		
-		
-		
+
+		RFID_Reader t1 = new RFID_Reader();
+		t1.run();
 	}
 	
 	@Override
@@ -175,11 +172,13 @@ public class adminpanel extends JFrame implements ActionListener {//extend jfram
 			if(usr.equals("admin") && passwd.equals("admin")) {//check user input equals with string
 				
 				this.dispose();//when press button first frame will dispose
+
 				adminview adminbtns = new adminview();//if button triggers this join to our page
 			}
 			else {
 				JOptionPane.showMessageDialog(this, "Invalid Username or Password");
 				this.dispose();
+
 				adminview adminbtns = new adminview();
 			}
 		}
