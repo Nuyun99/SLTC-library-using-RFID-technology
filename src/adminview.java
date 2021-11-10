@@ -1,10 +1,5 @@
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JPanel;
-import java.awt.Color;
-import javax.swing.JButton;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -24,6 +19,9 @@ public class adminview extends JFrame implements ActionListener {
 		getContentPane().setBackground(new Color(0x5b6c8b));
 		
 		ImageIcon bookImg = new ImageIcon("book1.png");
+		Image image = bookImg.getImage();
+		Image newimg = image.getScaledInstance(128, 128,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+		bookImg = new ImageIcon(newimg);
 		ImageIcon srchImg = new ImageIcon("search.png");
 		ImageIcon adbkImg = new ImageIcon("adbk.png");
 		ImageIcon dltImg  = new ImageIcon("delete.png");
@@ -53,7 +51,9 @@ public class adminview extends JFrame implements ActionListener {
 		upLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 53));
 		
 		JLabel upImgLabel = new JLabel();//upper JLabel contains Image
-		upImgLabel.setBounds(83, 35, 128, 128);
+		upImgLabel.setBounds(83, 35, 135, 135);
+		upImgLabel.setBackground(new Color(0xFFFFFFFF, true));
+		upImgLabel.setOpaque(true);
 		upImgLabel.setIcon(bookImg);
 		panel.add(upImgLabel);
 		
@@ -181,22 +181,27 @@ public class adminview extends JFrame implements ActionListener {
 		exitPanel.setBackground(new Color(0x1754f1));
 		exitPanel.setBounds(695, 454, 175, 183);
 		getContentPane().add(exitPanel);
-		
-		JLabel exitLabel = new JLabel();//exit program Icon Label
-		exitLabel.setBounds(58, 48, 64, 64);
-		exitLabel.setIcon(exitImg);
-		exitPanel.add(exitLabel);
-		
-		exitBtn = new JButton();//exit program button
-		exitBtn.setText("Exit Program");
+
+//		JLabel exitLabel = new JLabel();//exit program Icon Label
+//		exitLabel.setBounds(58, 48, 64, 64);
+//		//exitLabel.setIcon(exitImg);
+//		exitPanel.add(exitLabel);
+
+		exitBtn = new JButton("<html><br><br>Exit Program</html>",exitImg);//exit program button
+		//xitBtn.setText("Exit Program");
+		exitBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
+		exitBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		exitBtn.setForeground(Color.WHITE);
 		exitBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		exitBtn.setFocusable(false);
 		exitBtn.setBorder(null);
 		exitBtn.setBackground(new Color(0x1754f1));
-		exitBtn.setBounds(30, 140, 119, 21);
+		exitBtn.setBounds(0, 0, 175, 183);
 		exitBtn.addActionListener(this);
 		exitPanel.add(exitBtn);
+
+
+
 		
 	}
 	

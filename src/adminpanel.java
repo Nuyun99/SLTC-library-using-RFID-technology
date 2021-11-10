@@ -179,6 +179,8 @@ public class adminpanel extends JFrame implements ActionListener {//extend jfram
 			}
 			else {
 				JOptionPane.showMessageDialog(this, "Invalid Username or Password");
+				this.dispose();
+				adminview adminbtns = new adminview();
 			}
 		}
 	}
