@@ -11,6 +11,9 @@ import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.JComboBox;
 
 public class adduser extends JFrame implements ActionListener{
 	
@@ -23,10 +26,11 @@ public class adduser extends JFrame implements ActionListener{
 	JTextField phoneText;
 	JTextField yearText;
 	JTextField nicText;
-	JTextField dobText;
 	JButton backBtn;
 	
 	JButton submitBtn;
+	
+	JComboBox degreeBox;//drob down box
 
 	adduser(){
 		
@@ -142,7 +146,7 @@ public class adduser extends JFrame implements ActionListener{
 		JLabel phoneLabel = new JLabel("Phone Number");
 		phoneLabel.setForeground(Color.WHITE);
 		phoneLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 19));
-		phoneLabel.setBounds(78, 442, 122, 13);
+		phoneLabel.setBounds(469, 355, 122, 13);
 		getContentPane().add(phoneLabel);
 		
 		phoneText = new JTextField();
@@ -150,7 +154,7 @@ public class adduser extends JFrame implements ActionListener{
 		phoneText.setColumns(10);
 		phoneText.setBorder(new LineBorder(Color.BLACK, 2));
 		phoneText.setBackground(new Color(91, 108, 139));
-		phoneText.setBounds(78, 467, 290, 29);
+		phoneText.setBounds(469, 380, 290, 29);
 		getContentPane().add(phoneText);
 		
 		JLabel yearLabel = new JLabel("Graduate Year");
@@ -170,7 +174,7 @@ public class adduser extends JFrame implements ActionListener{
 		JLabel nicLabel = new JLabel("NIC ");
 		nicLabel.setForeground(Color.WHITE);
 		nicLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 19));
-		nicLabel.setBounds(469, 268, 60, 13);
+		nicLabel.setBounds(78, 442, 60, 13);
 		getContentPane().add(nicLabel);
 		
 		nicText = new JTextField();
@@ -178,22 +182,14 @@ public class adduser extends JFrame implements ActionListener{
 		nicText.setColumns(10);
 		nicText.setBorder(new LineBorder(Color.BLACK, 2));
 		nicText.setBackground(new Color(91, 108, 139));
-		nicText.setBounds(469, 298, 290, 29);
+		nicText.setBounds(78, 472, 290, 29);
 		getContentPane().add(nicText);
 		
-		dobText = new JTextField();
-		dobText.setForeground(Color.WHITE);
-		dobText.setColumns(10);
-		dobText.setBorder(new LineBorder(Color.BLACK, 2));
-		dobText.setBackground(new Color(91, 108, 139));
-		dobText.setBounds(469, 385, 290, 29);
-		getContentPane().add(dobText);
-		
-		JLabel dobLabel = new JLabel("Date of Birth");
-		dobLabel.setForeground(Color.WHITE);
-		dobLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 19));
-		dobLabel.setBounds(469, 355, 105, 13);
-		getContentPane().add(dobLabel);
+		JLabel degreeLabel = new JLabel("Degree Program");
+		degreeLabel.setForeground(Color.WHITE);
+		degreeLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 19));
+		degreeLabel.setBounds(469, 263, 136, 22);
+		getContentPane().add(degreeLabel);
 		
 		submitBtn = new JButton("SUBMIT");
 		submitBtn.setForeground(Color.BLACK);
@@ -201,8 +197,23 @@ public class adduser extends JFrame implements ActionListener{
 		submitBtn.setFocusable(false);
 		submitBtn.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		submitBtn.setBackground(new Color(242, 12, 39));
-		submitBtn.setBounds(627, 448, 118, 29);
+		submitBtn.addActionListener(this);
+		submitBtn.setBounds(627, 435, 118, 29);
 		getContentPane().add(submitBtn);
+		
+		String [] degrees = {"IT And Computing","Engineering","Technology","Business","Music"};//drop down array make sure to use data type as warapper class
+		
+		degreeBox = new JComboBox(degrees);//drop down 
+		degreeBox.setForeground(Color.WHITE);//font color of drop down
+		degreeBox.setBackground(new Color(0x5b6c8b));
+		degreeBox.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		degreeBox.setFont(new Font("Rockwell Extra Bold", Font.PLAIN, 15));
+		degreeBox.setFocusable(true);
+		degreeBox.setBounds(469, 296, 290, 29);
+		degreeBox.addActionListener(this);
+		
+		//degreeBox.addItem("name"); add item to drop down list
+		getContentPane().add(degreeBox);
 		
 		this.setVisible(true);
 		
@@ -214,6 +225,9 @@ public class adduser extends JFrame implements ActionListener{
 			this.dispose();
 			new adminview();
 		}
+		if(e.getSource()==degreeBox) {//drop down 
+			//System.out.println(degreeBox.getSelectedItem()); return selected item
+			//System.out.println(degreeBox.getSelectedIndex()); return selected index
+		}
 	}
-	
 }
