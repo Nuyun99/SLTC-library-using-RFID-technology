@@ -66,7 +66,7 @@ public class adminview extends JFrame implements ActionListener {
 		panel.add(logoutBtn);
 		
 		JPanel srchPanel = new JPanel();//search book panel
-		srchPanel.setBounds(391, 454, 175, 183);
+		srchPanel.setBounds(397, 454, 175, 183);
 		srchPanel.setBackground(new Color(0x1754f1));
 		getContentPane().add(srchPanel);
 		srchPanel.setLayout(null);
@@ -83,12 +83,13 @@ public class adminview extends JFrame implements ActionListener {
 		srchBtn.setText("Search Book");
 		srchBtn.setBorder(null);
 		srchBtn.setBackground(new Color(23, 84, 241));
+		srchBtn.addActionListener(this);
 		srchBtn.setFocusable(false);
 		srchPanel.add(srchBtn);
 		
 		JPanel addbkPanel = new JPanel();//add book JPanel
 		addbkPanel.setBackground(new Color(0x1754f1));
-		addbkPanel.setBounds(391, 244, 175, 183);
+		addbkPanel.setBounds(397, 244, 175, 183);
 		getContentPane().add(addbkPanel);
 		addbkPanel.setLayout(null);
 		
@@ -221,6 +222,11 @@ public class adminview extends JFrame implements ActionListener {
 		if(e.getSource()==delusrBtn) {// add user button
 			this.dispose();
 			updateuser userDel = new updateuser();
+		}
+		
+		if(e.getSource()==srchBtn) {//search button
+			this.dispose();
+			searchbook srch = new searchbook();
 		}
 		
 		if(e.getSource()== exitBtn) {//exit button
