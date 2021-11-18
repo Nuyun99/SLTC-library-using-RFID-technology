@@ -17,7 +17,7 @@ public class addbook extends JFrame implements ActionListener{
 	 JTextField sectionText;
 	 JTextField booktitleText;
 	 JTextField authorText;
-	 JTextField bookidText;
+	 JTextField bookgnrText;
 	 JTextField editionText;
 	 JButton backBtn;
 	 JButton submitBtn; 
@@ -125,20 +125,20 @@ public class addbook extends JFrame implements ActionListener{
 		authorLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 19));
 		authorLabel.setBounds(85, 278, 110, 13);
 		getContentPane().add(authorLabel);
-		
-		bookidText = new JTextField();
-		bookidText.setForeground(Color.WHITE);
-		bookidText.setColumns(10);
-		bookidText.setBorder(new LineBorder(Color.BLACK, 2));
-		bookidText.setBackground(new Color(0x5B6C8B));
-		bookidText.setBounds(85, 401, 290, 29);
-		getContentPane().add(bookidText);
-		
-		JLabel bookidLabel = new JLabel("Book ID");
-		bookidLabel.setForeground(Color.WHITE);
-		bookidLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 19));
-		bookidLabel.setBounds(85, 365, 82, 13);
-		getContentPane().add(bookidLabel);
+
+		bookgnrText = new JTextField();
+		bookgnrText.setForeground(Color.WHITE);
+		bookgnrText.setColumns(10);
+		bookgnrText.setBorder(new LineBorder(Color.BLACK, 2));
+		bookgnrText.setBackground(new Color(91, 108, 139));
+		bookgnrText.setBounds(85, 401, 290, 29);
+		getContentPane().add(bookgnrText);
+
+		JLabel bookgnrLabel = new JLabel("Book Genre");
+		bookgnrLabel.setForeground(Color.WHITE);
+		bookgnrLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 19));
+		bookgnrLabel.setBounds(85, 365, 95, 13);
+		getContentPane().add(bookgnrLabel);
 		
 		JLabel aboutLabel = new JLabel("About");
 		aboutLabel.setForeground(Color.WHITE);

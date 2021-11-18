@@ -115,8 +115,7 @@ public class searchbook extends JFrame implements ActionListener{
 		
 		
 		model = new DefaultTableModel(); // making model object in default table model class
-		Object[] coloumns = {"Picture" , "Book name" ,"Title" , "Author"};//coloums as object data type .. if want to change string data type
-		
+		Object[] coloumns = {"Picture" , "Book Title" ,"Author" , "Genre" , "Edition" , "Section" , "About"};//coloums as object data type .. if want to change string data type
 		model.setColumnIdentifiers(coloumns);//pass our String array name 
 	
 
