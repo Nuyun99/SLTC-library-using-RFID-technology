@@ -3,10 +3,10 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
-import java.awt.event.*;
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import javax.swing.JComboBox;
 
 public class adduser extends JFrame implements ActionListener{
@@ -33,11 +33,7 @@ public class adduser extends JFrame implements ActionListener{
 		
 		ImageIcon usr = new ImageIcon("largenewuser.png");
 		
-		ImageIcon back = new ImageIcon("back.png");
-		Image image = back.getImage();
-		Image newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-		back = new ImageIcon(newimg);
-
+		ImageIcon back = libMethod.scaledImg("back.png",30,30);
 		this.setBounds(100, 100, 895, 664);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(true);
@@ -235,8 +231,33 @@ public class adduser extends JFrame implements ActionListener{
 				rfidText.setText(t1.getRFIDnumber());
 				JOptionPane.showMessageDialog(this, "RFID Generated");
 
-			} else if (!t1.isAlive() && t1.getRFIDnumber().isEmpty()) {
-				JOptionPane.showMessageDialog(this, "RFID Generated failed!!\nTry again");
+			}
+//			else if (!t1.isAlive() && t1.getRFIDnumber().isEmpty()) {
+//				JOptionPane.showMessageDialog(this, "RFID Generated failed!!\nTry again");
+//			}
+		}
+		if(e.getSource() == submitBtn){
+			try{
+				Class.forName("java.sql.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject","harindu123","Zyco@123fuckinggood");
+				Statement stmt = con.createStatement();
+				String qry = "INSERT INTO `user_table`(`User Name`, `E-mail`, `Address`, `phone_Number`, `Graduate_Year`, `NIC`, `Dgree`, `RFID_NO`) VALUES ('" + nameText.getText() + "', '" + emailText.getText() + "', '" + addressText.getText() + "', '"  + phoneText.getText() + "', '" + yearText.getText() + "', '" + nicText.getText() + "', '"+degreeBox.getSelectedItem()+"', '"+ rfidText.getText()+ "');";
+				System.out.println(qry);
+				stmt.executeUpdate(qry);
+				JOptionPane.showMessageDialog(null, "New record has been saved successfully! \n You may view your profile by clicking on \n Update or Delete User.");
+				System.out.println("Generated SQL query: " + qry);
+
+				nameText.setText("");
+				emailText.setText("");
+				addressText.setText("");
+				rfidText.setText("");
+				phoneText.setText("");
+				yearText.setText("");
+				nicText.setText("");
+			}
+			catch(Exception exception){
+				JOptionPane.showMessageDialog(null, "The process could not be completed due to some error. Please check if all data entered are correct.");
+				System.out.println(exception.getLocalizedMessage());
 			}
 		}
 	}

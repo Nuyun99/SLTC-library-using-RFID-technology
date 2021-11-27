@@ -13,10 +13,10 @@ import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JPasswordField;
-import javax.swing.border.LineBorder;
 
 public class adminpanel extends JFrame implements ActionListener  {//extend jframe class and actionlistener interface
 	//if this order changes program willl be fucked up
@@ -28,12 +28,10 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 	JSeparator usrSeparator;
 	JTextField usridField;
 	JPasswordField passwordField;
-
+	RFID_Reader t1;
 
 
 	adminpanel(){
-
-		
 		//jlabel is a component that holds picture or text inside a frame
 		
 		ImageIcon image = new ImageIcon("line.png");
@@ -61,7 +59,7 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 		this.setUndecorated(true);//maximize both
 		this.setLocationRelativeTo(null);
 		//this.pack();
-		this.setVisible(true);
+//		this.setVisible(true);
 		
 		//this.pack();
 		this.getContentPane().setLayout(null);//set frame layout as absolute layout
@@ -146,20 +144,56 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 		passwordField.setBorder(null);
 		loginPanel.add(passwordField);
 		
-		
-		
+
 		loginBtn = new JButton("LOGIN");
 		loginBtn.setBounds(234, 632, 131, 39);
 		loginPanel.add(loginBtn);
-		loginBtn.setForeground(new Color(0, 0, 0));
+		loginBtn.setForeground(new Color(255, 255, 255));
 		loginBtn.addActionListener(this);//since this keyword for our actionlistner interface
 		loginBtn.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
-		loginBtn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
-		loginBtn.setBackground(new Color(242, 12, 39));
+		loginBtn.setFont(new Font("Tempus Sans ITC", Font.BOLD, 17));
+		loginBtn.setBackground(new Color(0, 151, 238));
 		loginBtn.setFocusable(false);
+		this.setVisible(true);
+		authUser();
+	}
+	private void authUser() {
 
-		RFID_Reader t1 = new RFID_Reader();
-		t1.run();
+		try {
+			String rfidKey ;
+			t1 = new RFID_Reader();
+			t1.start();
+			while(t1.isAlive()){
+
+			}
+			rfidKey = t1.getRFIDnumber();
+			if (rfidKey != null) {
+				Class.forName("java.sql.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject", "harindu123", "Zyco@123fuckinggood");
+				Statement stmt = con.createStatement();
+				String qry = "SELECT * FROM `user_table` WHERE `RFID_NO` LIKE '" + rfidKey + "';";
+				System.out.println("Searched SQL query: " + qry);
+				ResultSet rs = stmt.executeQuery(qry);
+				if (rs.next()) {
+					if (rs.getString("RFID_NO").equals(rfidKey)) {
+						JOptionPane.showMessageDialog(this, "User Authenticated");
+						this.dispose();
+						t1.stop();
+						new userPanel();
+					}
+				}else{
+					JOptionPane.showMessageDialog(this, "Access Denied");
+					this.dispose();
+					t1.stop();
+					new adminpanel();
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	@Override
@@ -170,16 +204,30 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 			String passwd = passwordField.getText();
 			
 			if(usr.equals("admin") && passwd.equals("admin")) {//check user input equals with string
-				
 				this.dispose();//when press button first frame will dispose
+				t1.stop();
+				new adminview();//if button triggers this join to our page
+			}
+			else if(usr.equals("user") && passwd.equals("user")) {//check user input equals with string
 
-				adminview adminbtns = new adminview();//if button triggers this join to our page
+				this.dispose();//when press button first frame will dispose
+				t1.stop();
+				new userPanel();//if button triggers this join to our page
 			}
 			else {
 				JOptionPane.showMessageDialog(this, "Invalid Username or Password");
-				this.dispose();
-
-				adminview adminbtns = new adminview();
+//				this.dispose();
+//				t1.stop();
+//				int result = JOptionPane.showConfirmDialog(this,"Sure? You want to enter?", "Testing Box",
+//						JOptionPane.YES_NO_OPTION,
+//						JOptionPane.QUESTION_MESSAGE);
+//				if(result == JOptionPane.YES_OPTION){
+//					new adminview();
+//				}else if (result == JOptionPane.NO_OPTION){
+//					new userPanel();
+//				}else {
+//					new adminpanel();
+//				}
 			}
 		}
 	}

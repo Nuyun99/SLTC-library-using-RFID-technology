@@ -18,21 +18,14 @@ public class adminview extends JFrame implements ActionListener {
 		setResizable(false);
 		getContentPane().setBackground(new Color(0x5B6C8B));
 		
-		ImageIcon bookImg = new ImageIcon("book1.png");
-		Image image = bookImg.getImage();
-		Image newimg = image.getScaledInstance(135, 135,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-		bookImg = new ImageIcon(newimg);
+		ImageIcon bookImg = libMethod.scaledImg("book1.png",135,135);
 		ImageIcon srchImg = new ImageIcon("search.png");
 		ImageIcon adbkImg = new ImageIcon("adbk.png");
 		ImageIcon dltImg  = new ImageIcon("delete.png");
 		ImageIcon lendImg = new ImageIcon("handover.png");
 		ImageIcon infoImg = new ImageIcon("aboutus.png");
 		ImageIcon exitImg = new ImageIcon("exit.png");
-		ImageIcon logoutImg = new ImageIcon("logout.png");
-		image = logoutImg.getImage();
-		newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-		logoutImg = new ImageIcon(newimg);
-
+		ImageIcon logoutImg =libMethod.scaledImg("usrlogout.png",26, 26);
 		
 		this.setBounds(100, 100, 972, 699);//this key word replace Frame name
 		this.setUndecorated(true);//title bar disappear
@@ -53,18 +46,18 @@ public class adminview extends JFrame implements ActionListener {
 		panel.add(upLabel);
 		upLabel.setText("Library Management System");
 		upLabel.setFont(new Font("Tw Cen MT", Font.BOLD, 53));
-		
+
+
 		JLabel upImgLabel = new JLabel();//upper JLabel contains Image
 		upImgLabel.setBounds(83, 35, 135, 135);
 		upImgLabel.setIcon(bookImg);
 		panel.add(upImgLabel);
 
-
 		logoutBtn = new JButton();
 		logoutBtn.setLayout(null);
 		logoutBtn.addActionListener(this);
 		logoutBtn.setBounds(2, 2, 135, 30);
-		logoutBtn.setBackground(Color.RED);
+		logoutBtn.setBackground(new Color(0xEC777171, true));
 		logoutBtn.setIcon(logoutImg);
 		logoutBtn.setText("LOG OUT");
 		logoutBtn.setForeground(Color.WHITE);
@@ -133,7 +126,7 @@ public class adminview extends JFrame implements ActionListener {
 		getContentPane().add(lendbkPanel);
 		lendbkPanel.setLayout(null);
 		
-		lendbkBtn = new JButton("<html><br><br>Lend Book</html>",lendImg);//lend book button
+		lendbkBtn = new JButton("<html><br><br>Manual User Entries</html>",lendImg);//lend book button
 		lendbkBtn.setForeground(Color.WHITE);
 		lendbkBtn.setFont(new Font("Verdana", Font.BOLD, 12));
 		lendbkBtn.setFocusable(false);
@@ -188,9 +181,9 @@ public class adminview extends JFrame implements ActionListener {
 		if(e.getSource()== logoutBtn) {//logout button functionality
 			this.dispose();
 			new adminpanel();
-			
+
 		}
-		
+
 		if(e.getSource()== addbkBtn) {//add book button
 			this.dispose();
 			addbook book = new addbook();
@@ -211,11 +204,12 @@ public class adminview extends JFrame implements ActionListener {
 		}
 		
 		if(e.getSource()== exitBtn) {//exit button
-			System.exit(0);
+			int result = JOptionPane.showConfirmDialog(this,"Sure? You want to exit?", "Library System",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE);
+			if(result == JOptionPane.YES_OPTION){
+				System.exit(0);
+			}
 		}
 	}
-	
-
-	
-	
 }

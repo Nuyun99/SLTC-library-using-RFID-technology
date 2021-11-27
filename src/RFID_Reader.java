@@ -1,23 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class RFID_Reader extends Thread{
-    private String RFIDnumber ="1025859658" ;
+
+    private String RFIDnumber ;
 
     public String getRFIDnumber() {
+
         return RFIDnumber;
     }
 
     public void run()
-    {   int n=0;
-
+    {
         try {
-            while(n<5) {
+            while(RFIDnumber == null) {
                 System.out.println("running...\n");
-                n++;
+
+                RFIDnumber = txtReader.getRfidNo();
                 sleep(1000);
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
 
         }

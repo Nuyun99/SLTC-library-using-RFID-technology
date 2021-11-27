@@ -1,13 +1,10 @@
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
-import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import java.awt.event.*;
-import javax.swing.JTextArea;
-import javax.swing.JButton;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import javax.swing.border.EtchedBorder;
 
 
@@ -19,26 +16,21 @@ public class addbook extends JFrame implements ActionListener{
 	 JTextField authorText;
 	 JTextField bookgnrText;
 	 JTextField editionText;
+	 JTextArea aboutTextArea;
 	 JButton backBtn;
-	 JButton submitBtn; 
+	 JButton genarateBtn;
+	 JButton submitBtn;
+
 	 private JTextField textField;
 	 
 	
 	addbook() {
 		
 		ImageIcon book = new ImageIcon("largebook.png");
-		
-		ImageIcon close = new ImageIcon("back.png");
-		Image image = close.getImage();
-		Image newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-		close = new ImageIcon(newimg);
-		
-		//getContentPane().setFont(new Font("Eras Bold ITC", Font.BOLD, 48));
+		ImageIcon close = libMethod.scaledImg("back.png",30,30);
 		getContentPane().setBackground(new Color(0x5B6C8B));
 	
 		this.setBounds(100, 100, 953, 756);
-		//this.setDefaultCloseOperation(closeBtn.EXIT_ON_CLOSE);
-		//this.setResizable(false);
 		this.setUndecorated(true);//title bar disappear
 		this.setLocationRelativeTo(null);//this set center our frame
 		getContentPane().setLayout(null);
@@ -61,7 +53,6 @@ public class addbook extends JFrame implements ActionListener{
 		panel.add(bookLabel);
 		
 		backBtn = new JButton();//close button
-		//closeBtn.setForeground(Color.RED);
 		backBtn.setBounds(5, 5, 30, 30);
 		backBtn.setFocusable(false);
 		backBtn.setBackground(new Color(0xF50097EE));
@@ -160,21 +151,21 @@ public class addbook extends JFrame implements ActionListener{
 		editionText.setBounds(85, 479, 290, 29);
 		getContentPane().add(editionText);
 		
-		JTextArea aboutTextArea = new JTextArea();
+		aboutTextArea = new JTextArea();
 		aboutTextArea.setBounds(569, 399, 290, 109);
 		getContentPane().add(aboutTextArea);
 		aboutTextArea.setBackground(new Color(0x5B6C8B));
 		aboutTextArea.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		
-		
+
 		submitBtn = new JButton("SUBMIT");
 		submitBtn.setBounds(741, 540, 118, 29);
 		submitBtn.setForeground(new Color(0, 0, 0));
-		//submitBtn.addActionListener(this);//since this keyword for our actionlistner interface
 		submitBtn.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		submitBtn.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 		submitBtn.setBackground(new Color(0x3edad8));
 		submitBtn.setFocusable(false);
+		submitBtn.addActionListener(this);//since this keyword for our action listner interface
+
 		getContentPane().add(submitBtn);
 		
 		JPanel bottomPanel = new JPanel();
@@ -197,13 +188,14 @@ public class addbook extends JFrame implements ActionListener{
 		rfidLabel.setBounds(192, 28, 76, 13);
 		bottomPanel.add(rfidLabel);
 		
-		JButton genarateBtn = new JButton("GENARATE");
+		genarateBtn = new JButton("GENARATE");
 		genarateBtn.setForeground(Color.WHITE);
 		genarateBtn.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 		genarateBtn.setFocusable(false);
 		genarateBtn.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		genarateBtn.setBackground(Color.DARK_GRAY);
 		genarateBtn.setBounds(621, 21, 118, 29);
+		genarateBtn.addActionListener(this);
 		bottomPanel.add(genarateBtn);
 		this.setVisible(true);
 	}
@@ -214,12 +206,46 @@ public class addbook extends JFrame implements ActionListener{
 			this.dispose();
 			new adminview();
 		}
-	}
-	
+		if(e.getSource() == genarateBtn){
 
-	public void actionPerformed2(ActionEvent e) {// when submit button press what it should be done code here
-		if(e.getSource()==submitBtn) {
-			
+			RFID_Reader t1 = new RFID_Reader();
+			t1.run();
+			if (!t1.getRFIDnumber().isEmpty()) {
+				textField.setText(t1.getRFIDnumber());
+				JOptionPane.showMessageDialog(this, "RFID Generated");
+
+			} else if (!t1.isAlive() && t1.getRFIDnumber().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "RFID Generated failed!!\nTry again");
+			}
 		}
+
+		if(e.getSource() == submitBtn){
+			try{
+				Class.forName("java.sql.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject","harindu123","Zyco@123fuckinggood");
+				Statement stmt = con.createStatement();
+				String qry = "INSERT INTO `book_table`(`Book Title`, `Book Author`, `Genre`, `Edition`, `Rack Number`, `Section`, `About`, `RFID_NO`) VALUES ('"+booktitleText.getText()+"','"+authorText.getText()+"','"+bookgnrText.getText()+"','"+editionText.getText()+"','"+rackText.getText()+"','"+sectionText.getText()+"','"+aboutTextArea.getText()+"','"+textField.getText()+"');";
+				stmt.executeUpdate(qry);
+				JOptionPane.showMessageDialog(null, "New record has been saved successfully! \n You may Book by clicking on \n Search Book.");
+				System.out.println("Generated SQL query: " + qry);
+
+				booktitleText.setText("");
+				authorText.setText("");
+				bookgnrText.setText("");
+				editionText.setText("");
+				rackText.setText("");
+				sectionText.setText("");
+				aboutTextArea.setText("");
+				textField.setText("");
+			}
+			catch(Exception exception){
+				JOptionPane.showMessageDialog(null, "The process could not be completed due to some error. Please check if all data entered are correct.");
+				System.out.println(exception.getLocalizedMessage());
+			}
+		}
+
+
+
 	}
+
 }

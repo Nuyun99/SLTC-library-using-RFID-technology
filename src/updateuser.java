@@ -1,18 +1,16 @@
 import java.awt.*;
-import javax.swing.ImageIcon;
-	import javax.swing.JFrame;
-	import javax.swing.JLabel;
-	import javax.swing.JPanel;
-	import javax.swing.JTextField;
-	import javax.swing.border.LineBorder;
-	import javax.swing.JButton;
-	import javax.swing.border.EtchedBorder;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.EtchedBorder;
 	import java.awt.event.ActionListener;
 	import java.awt.event.*;
 	import java.awt.event.ActionEvent;
-import javax.swing.JSeparator;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-	public class updateuser extends JFrame implements ActionListener{
+public class updateuser extends JFrame implements ActionListener{
 		
 		/*whenever extract text in text field make sure use below JTextField Variables*/
 		
@@ -25,24 +23,19 @@ import javax.swing.JSeparator;
 		JTextField nicText;
 		JTextField dobText;
 		JTextField rfidText;
-		
 		JButton backBtn;
 		JButton srchBtn;
-		JButton submitBtn;
-		
+		JButton deleteBtn;
+		JButton updateBtn;
+
 
 		updateuser(){
 			
 			getContentPane().setBackground(new Color(0x5b6c8b));
 			
 			ImageIcon usr = new ImageIcon("largedeluser.png");
-			
 			ImageIcon src = new ImageIcon("src.png");
-			
-			ImageIcon back = new ImageIcon("back.png");
-			Image image = back.getImage();
-			Image newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-			back = new ImageIcon(newimg);
+			ImageIcon back = libMethod.scaledImg("back.png",30,30);
 
 			this.setBounds(100, 100, 895, 664);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -152,6 +145,7 @@ import javax.swing.JSeparator;
 			srchBtn.setIcon(src);
 			srchBtn.setFocusable(false);
 			srchBtn.setBounds(623, 23, 32, 32);
+			srchBtn.addActionListener(this);
 			bottomPanel.add(srchBtn);
 			
 			JLabel phoneLabel = new JLabel("Phone Number");
@@ -210,14 +204,15 @@ import javax.swing.JSeparator;
 			dobLabel.setBounds(469, 430, 105, 13);
 			getContentPane().add(dobLabel);
 			
-			submitBtn = new JButton("DELETE");
-			submitBtn.setForeground(Color.BLACK);
-			submitBtn.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-			submitBtn.setFocusable(false);
-			submitBtn.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
-			submitBtn.setBackground(Color.RED);
-			submitBtn.setBounds(641, 604, 118, 29);
-			getContentPane().add(submitBtn);
+			deleteBtn = new JButton("DELETE");
+			deleteBtn.setForeground(Color.BLACK);
+			deleteBtn.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+			deleteBtn.setFocusable(false);
+			deleteBtn.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+			deleteBtn.setBackground(Color.RED);
+			deleteBtn.setBounds(641, 604, 118, 29);
+			deleteBtn.addActionListener(this);
+			getContentPane().add(deleteBtn);
 			
 			JLabel rfidLabel = new JLabel("Rfid No");
 			rfidLabel.setForeground(Color.WHITE);
@@ -232,14 +227,15 @@ import javax.swing.JSeparator;
 			rfidText.setBackground(new Color(91, 108, 139));
 			rfidText.setBounds(469, 547, 290, 29);
 			getContentPane().add(rfidText);
-			
-			JButton updateBtn = new JButton("UPDATE");
+
+			updateBtn = new JButton("UPDATE");
 			updateBtn.setForeground(Color.WHITE);
 			updateBtn.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
 			updateBtn.setFocusable(false);
 			updateBtn.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 			updateBtn.setBackground(new Color(0x3edad8));
 			updateBtn.setBounds(504, 604, 118, 29);
+			updateBtn.addActionListener(this);
 			getContentPane().add(updateBtn);
 			
 			this.setVisible(true);
@@ -252,6 +248,203 @@ import javax.swing.JSeparator;
 				this.dispose();
 				new adminview();
 			}
+			if (e.getSource()==srchBtn ){
+				//System.out.println(searchText.getText());
+				if ( searchText.getText().contains("@")){
+					try{
+
+						Class.forName("java.sql.Driver");
+						Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject","harindu123","Zyco@123fuckinggood");
+						Statement stmt = con.createStatement();
+						String qry = "SELECT * FROM `user_table` WHERE `E-mail` = '" + searchText.getText() + "';";
+						System.out.println("Searched SQL query: " + qry);
+						ResultSet rs = stmt.executeQuery(qry);
+						if (rs.next()) {
+							nameText.setText(rs.getString("User Name"));
+							emailText.setText(rs.getString("E-mail"));
+							addressText.setText(rs.getString("Address"));
+							phoneText.setText(rs.getString("phone_Number"));
+							yearText.setText(rs.getString("Graduate_Year").substring(0,4));
+							nicText.setText(rs.getString("NIC"));
+							dobText.setText(rs.getString("Dgree"));
+							rfidText.setText(rs.getString("RFID_NO"));
+							JOptionPane.showMessageDialog(null, "Generated SQL query: " + qry);
+							this.setVisible(true);
+						}else{
+							nameText.setText("");
+							emailText.setText("");
+							addressText.setText("");
+							phoneText.setText("");
+							yearText.setText("");
+							nicText.setText("");
+							dobText.setText("");
+							rfidText.setText("");
+							JOptionPane.showMessageDialog(null, "No Matching Found");
+						}
+					}catch(Exception exception){
+						JOptionPane.showMessageDialog(null, "Error in Connectivity");
+						System.out.println(exception.getLocalizedMessage());
+					}
+				}else if(((searchText.getText().contains("V") || searchText.getText().length() == 12) && searchText.getText().length() >= 10)){
+					try{
+
+						Class.forName("java.sql.Driver");
+						Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject","harindu123","Zyco@123fuckinggood");
+						Statement stmt = con.createStatement();
+						String qry = "SELECT * FROM `user_table` WHERE `NIC` = '" + searchText.getText() + "';";
+						System.out.println("Searched SQL query: " + qry);
+						ResultSet rs = stmt.executeQuery(qry);
+						if (rs.next()) {
+							nameText.setText(rs.getString("User Name"));
+							emailText.setText(rs.getString("E-mail"));
+							addressText.setText(rs.getString("Address"));
+							phoneText.setText(rs.getString("phone_Number"));
+							yearText.setText(rs.getString("Graduate_Year").substring(0,4));
+							nicText.setText(rs.getString("NIC"));
+							dobText.setText(rs.getString("Dgree"));
+							rfidText.setText(rs.getString("RFID_NO"));
+							JOptionPane.showMessageDialog(null, "Generated SQL query: " + qry);
+							this.setVisible(true);
+						}else{
+							nameText.setText("");
+							emailText.setText("");
+							addressText.setText("");
+							phoneText.setText("");
+							yearText.setText("");
+							nicText.setText("");
+							dobText.setText("");
+							rfidText.setText("");
+							JOptionPane.showMessageDialog(null, "No Matching Found");
+						}
+					}catch(Exception exception){
+						JOptionPane.showMessageDialog(null, "Error in Connectivity");
+						System.out.println(exception.getLocalizedMessage());
+					}
+				}else{
+					nameText.setText("");
+					emailText.setText("");
+					addressText.setText("");
+					phoneText.setText("");
+					yearText.setText("");
+					nicText.setText("");
+					dobText.setText("");
+					rfidText.setText("");
+					JOptionPane.showMessageDialog(null, "Enter Valid Email or NIC Number");
+				}
+			}
+
+			if (e.getSource()==updateBtn ){
+
+
+				int result = JOptionPane.showConfirmDialog(this,"Sure? You want to enter?", "Testing Box",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+				if(result == JOptionPane.YES_OPTION){
+					System.out.println(searchText.getText());
+					if ( searchText.getText().contains("@")){
+						try {
+							Class.forName("java.sql.Driver");
+							Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject", "harindu123", "Zyco@123fuckinggood");
+							Statement stmt = con.createStatement();
+							String qry = "UPDATE `user_table` SET `User Name`='" + nameText.getText() + "',`E-mail`='" + emailText.getText() + "',`Address`='" + addressText.getText() + "',`phone_Number`='" + phoneText.getText() + "',`Graduate_Year`='" + yearText.getText() + "',`NIC`='" + nicText.getText() + "',`Dgree`='" + dobText.getText() + "',`RFID_NO`='" + rfidText.getText() + "' WHERE E-mail = '" + searchText.getText() + "' ;";
+							System.out.println("Updated SQL query: " + qry);
+							stmt.executeUpdate(qry);
+							nameText.setText("");
+							emailText.setText("");
+							addressText.setText("");
+							phoneText.setText("");
+							yearText.setText("");
+							nicText.setText("");
+							dobText.setText("");
+							rfidText.setText("");
+							JOptionPane.showMessageDialog(null, "Update Successfully!!");
+						} catch (Exception exception) {
+							JOptionPane.showMessageDialog(null, "Error in Connectivity");
+							System.out.println(exception.getLocalizedMessage());
+						}
+					}
+					else if (((searchText.getText().contains("V") || searchText.getText().length() == 12) && searchText.getText().length() >= 10)){
+						try {
+							Class.forName("java.sql.Driver");
+							Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject", "harindu123", "Zyco@123fuckinggood");
+							Statement stmt = con.createStatement();
+							String qry = "UPDATE `user_table` SET `User Name`='" + nameText.getText() + "',`E-mail`='" + emailText.getText() + "',`Address`='" + addressText.getText() + "',`phone_Number`='" + phoneText.getText() + "',`Graduate_Year`='" + yearText.getText() + "',`NIC`='" + nicText.getText() + "',`Dgree`='" + dobText.getText() + "',`RFID_NO`='" + rfidText.getText() + "' WHERE NIC = '" + searchText.getText() + "' ;";
+							System.out.println("Updated SQL query: " + qry);
+							stmt.executeUpdate(qry);
+							nameText.setText("");
+							emailText.setText("");
+							addressText.setText("");
+							phoneText.setText("");
+							yearText.setText("");
+							nicText.setText("");
+							dobText.setText("");
+							rfidText.setText("");
+							JOptionPane.showMessageDialog(null, "Update Successfully!!");
+						} catch (Exception exception) {
+							exception.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Error in Connectivity");
+							System.out.println(exception.getLocalizedMessage());
+						}
+					}
+				}
+			}
+
+			if (e.getSource() == deleteBtn){
+				int result = JOptionPane.showConfirmDialog(this,"Sure? You want to delete?", "Testing Box",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+				if(result == JOptionPane.YES_OPTION) {
+					if (searchText.getText().contains("@")) {
+						try {
+							Class.forName("java.sql.Driver");
+							Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject", "harindu123", "Zyco@123fuckinggood");
+							Statement stmt = con.createStatement();
+							String qry = "DELETE FROM `user_table` WHERE E-mail = '" + searchText.getText() + "' ;";
+							System.out.println("Deleted SQL query: " + qry);
+							stmt.executeUpdate(qry);
+							nameText.setText("");
+							emailText.setText("");
+							addressText.setText("");
+							phoneText.setText("");
+							yearText.setText("");
+							nicText.setText("");
+							dobText.setText("");
+							rfidText.setText("");
+							JOptionPane.showMessageDialog(null, "Delete Successfully!!");
+						} catch (Exception exception) {
+							JOptionPane.showMessageDialog(null, "Error in Connectivity");
+							System.out.println(exception.getLocalizedMessage());
+						}
+					} else if (((searchText.getText().contains("V") || searchText.getText().length() == 12) && searchText.getText().length() >= 10)) {
+						try {
+							Class.forName("java.sql.Driver");
+							Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject", "harindu123", "Zyco@123fuckinggood");
+							Statement stmt = con.createStatement();
+							String qry = "DELETE FROM `user_table` WHERE NIC = '" + searchText.getText() + "' ;";
+							System.out.println("Deleted SQL query: " + qry);
+							stmt.executeUpdate(qry);
+							nameText.setText("");
+							emailText.setText("");
+							addressText.setText("");
+							phoneText.setText("");
+							yearText.setText("");
+							nicText.setText("");
+							dobText.setText("");
+							rfidText.setText("");
+							JOptionPane.showMessageDialog(null, "Delete Successfully!!");
+						} catch (Exception exception) {
+							exception.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Error in Connectivity");
+							System.out.println(exception.getLocalizedMessage());
+						}
+					}
+				}
+			}
+
+
 		}
+
+
+
 }
 
