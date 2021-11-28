@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 
 public class userPanel extends JFrame implements ActionListener{
 
-
 	JPanel upperPannel; 
 	JButton lendbookbtn;
 	JButton returnbookbtn;
@@ -19,7 +18,6 @@ public class userPanel extends JFrame implements ActionListener{
 	public userPanel() {
 
 		initialize();
-
 		this.setVisible(true);
 	}
 
@@ -42,7 +40,6 @@ public class userPanel extends JFrame implements ActionListener{
 
 	}
 	private void initialize() {
-		//frame.setBounds(100, 100, 1248, 784);
 		this.setBounds(100, 100, 1920, 1080);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);

@@ -11,8 +11,6 @@ import javax.swing.JComboBox;
 
 public class adduser extends JFrame implements ActionListener{
 	
-	/*whenever extract text in text field make sure use below JTextField Variables*/
-	
 	JTextField nameText;
 	JTextField emailText;
 	JTextField addressText;
@@ -23,8 +21,6 @@ public class adduser extends JFrame implements ActionListener{
 	JComboBox degreeBox;//drob down box
 	JButton backBtn;
 	JButton genarateBtn;
-
-	
 	JButton submitBtn;
 
 	adduser(){

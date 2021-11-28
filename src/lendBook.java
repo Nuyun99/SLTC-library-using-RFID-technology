@@ -42,12 +42,13 @@ public class lendBook extends JFrame implements ActionListener {
 		this.setBounds(100, 100, 1920, 1080);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+		this.getContentPane().setLayout(null);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximize both
 		this.setUndecorated(true);//maximize both
 		this.setLocationRelativeTo(null);
 		this.getContentPane().setBackground(new Color(0x5B6C8B));//CONTENT PANE COLOR 
 		getContentPane().setPreferredSize(new Dimension(1920, 1080));
-		getContentPane().setLayout(null);
+
 		
 		JPanel upperPannel = new JPanel();
 		upperPannel.setLayout(null);

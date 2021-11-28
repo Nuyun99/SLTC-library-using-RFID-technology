@@ -4,11 +4,11 @@ import static java.lang.System.in;
 
 public class txtReader {
 
-    static private String RFID_NO = null;
+    static private String RFID_NO = "";
 
     public static String getRfidNo() throws IOException {
         try{
-            RFID_NO = null;
+            RFID_NO = "";
             File file = new File("rfidText.txt");
             BufferedReader br = new BufferedReader(new FileReader("rfidText.txt"));
             String strLine;
@@ -28,6 +28,8 @@ public class txtReader {
         }finally{
             in.close();
         }
+
         return RFID_NO;
+
     }
 }

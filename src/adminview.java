@@ -4,8 +4,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class adminview extends JFrame implements ActionListener {
-	
-	/*add button names as local variable since action perform is out of our constructor*/
+
 	JButton logoutBtn;
 	JButton srchBtn;
 	JButton addbkBtn;
@@ -15,9 +14,50 @@ public class adminview extends JFrame implements ActionListener {
 	JButton exitBtn; 
 	
 	adminview(){
+		frontEnd();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {// button functionalities
+		
+		if(e.getSource()== logoutBtn) {//logout button functionality
+			this.dispose();
+			adminpanel panel2 = new adminpanel();
+		}
+
+		if(e.getSource()== addbkBtn) {//add book button
+			this.dispose();
+			addbook book = new addbook();
+		}
+		
+		if(e.getSource()==addusrBtn) {// add user button
+			this.dispose();
+			adduser user = new adduser();
+		}
+		
+		if(e.getSource()==delusrBtn) {// add user button
+			this.dispose();
+			updateuser userDel = new updateuser();
+		}
+		if(e.getSource() == srchBtn){// add search button
+			this.dispose();
+			searchbook searchbook = new searchbook();
+		}
+		
+		if(e.getSource()== exitBtn) {//exit button
+			int result = JOptionPane.showConfirmDialog(this,"Sure? You want to exit?", "Library System",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE);
+			if(result == JOptionPane.YES_OPTION){
+				System.exit(0);
+			}
+		}
+	}
+
+	public void frontEnd(){
 		setResizable(false);
 		getContentPane().setBackground(new Color(0x5B6C8B));
-		
+
 		ImageIcon bookImg = libMethod.scaledImg("book1.png",135,135);
 		ImageIcon srchImg = new ImageIcon("search.png");
 		ImageIcon adbkImg = new ImageIcon("adbk.png");
@@ -26,19 +66,19 @@ public class adminview extends JFrame implements ActionListener {
 		ImageIcon infoImg = new ImageIcon("aboutus.png");
 		ImageIcon exitImg = new ImageIcon("exit.png");
 		ImageIcon logoutImg =libMethod.scaledImg("usrlogout.png",26, 26);
-		
+
 		this.setBounds(100, 100, 972, 699);//this key word replace Frame name
 		this.setUndecorated(true);//title bar disappear
 		this.setLocationRelativeTo(null);//this set center our frame
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
-		
+
 		JPanel panel = new JPanel();//upper jPannel
 		panel.setBackground(new Color(0xF50097EE));
 		panel.setBounds(0, 0, 972, 205);
 		getContentPane().add(panel);
 		panel.setLayout(null);
-		
+
 		JLabel upLabel = new JLabel();//upper JLabel contains Text
 		upLabel.setBackground(Color.WHITE);
 		upLabel.setForeground(new Color(232, 235, 243));
@@ -71,7 +111,7 @@ public class adminview extends JFrame implements ActionListener {
 		srchPanel.setBackground(new Color(0xF50097EE));
 		getContentPane().add(srchPanel);
 		srchPanel.setLayout(null);
-		
+
 		srchBtn = new JButton("<html><br><br>Search Book</html>",srchImg);//search book panel button
 		srchBtn.setForeground(Color.WHITE);
 		srchBtn.setFont(new Font("Verdana", Font.BOLD, 12));
@@ -89,7 +129,7 @@ public class adminview extends JFrame implements ActionListener {
 		addbkPanel.setBounds(398, 244, 175, 183);
 		getContentPane().add(addbkPanel);
 		addbkPanel.setLayout(null);
-		
+
 		addbkBtn = new JButton("<html><br><br>Add Book</html>",adbkImg);//add book button
 		addbkBtn.setForeground(Color.WHITE);
 		addbkBtn.setFont(new Font("Verdana", Font.BOLD, 12));
@@ -101,7 +141,7 @@ public class adminview extends JFrame implements ActionListener {
 		addbkBtn.setHorizontalTextPosition(SwingConstants.CENTER);
 		addbkPanel.add(addbkBtn);
 
-		
+
 		JPanel delusrPanel = new JPanel();//update or delete user JPanel
 		delusrPanel.setBackground(new Color(0xF50097EE));
 		delusrPanel.setBounds(695, 244, 175, 183);
@@ -125,7 +165,7 @@ public class adminview extends JFrame implements ActionListener {
 		lendbkPanel.setBounds(100, 454, 175, 183);
 		getContentPane().add(lendbkPanel);
 		lendbkPanel.setLayout(null);
-		
+
 		lendbkBtn = new JButton("<html><br><br>Manual User Entries</html>",lendImg);//lend book button
 		lendbkBtn.setForeground(Color.WHITE);
 		lendbkBtn.setFont(new Font("Verdana", Font.BOLD, 12));
@@ -173,43 +213,5 @@ public class adminview extends JFrame implements ActionListener {
 		exitPanel.add(exitBtn);
 
 		this.setVisible(true);
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {// button functionalities
-		
-		if(e.getSource()== logoutBtn) {//logout button functionality
-			this.dispose();
-			new adminpanel();
-
-		}
-
-		if(e.getSource()== addbkBtn) {//add book button
-			this.dispose();
-			addbook book = new addbook();
-		}
-		
-		if(e.getSource()==addusrBtn) {// add user button
-			this.dispose();
-			adduser user = new adduser();
-		}
-		
-		if(e.getSource()==delusrBtn) {// add user button
-			this.dispose();
-			updateuser userDel = new updateuser();
-		}
-		if(e.getSource() == srchBtn){// add search button
-			this.dispose();
-			searchbook searchbook = new searchbook();
-		}
-		
-		if(e.getSource()== exitBtn) {//exit button
-			int result = JOptionPane.showConfirmDialog(this,"Sure? You want to exit?", "Library System",
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE);
-			if(result == JOptionPane.YES_OPTION){
-				System.exit(0);
-			}
-		}
 	}
 }
