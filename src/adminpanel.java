@@ -46,14 +46,16 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 			if(usr.equals("admin") && passwd.equals("admin")) {//check user input equals with string
 				this.dispose();//when press button first frame will dispose
 				auth1.stop();
+				auth1.t1.stop();
 				new adminview();//if button triggers this join to our page
 			}
-			else if(usr.equals("user") && passwd.equals("user")) {//check user input equals with string
-
-				this.dispose();//when press button first frame will dispose
-				auth1.stop();
-				new userPanel();//if button triggers this join to our page
-			}
+//			else if(usr.equals("user") && passwd.equals("user")) {//check user input equals with string
+//
+//				this.dispose();//when press button first frame will dispose
+//				auth1.stop();
+//				auth1.t1.stop();
+//				new userPanel();//if button triggers this join to our page
+//			}
 			else {
 				JOptionPane.showMessageDialog(this, "Invalid Username or Password");
 //				this.dispose();
