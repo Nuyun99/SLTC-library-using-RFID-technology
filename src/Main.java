@@ -7,6 +7,8 @@ public class Main {
 		//new userPanel();
 		 //new adminview();
 		//new updateuser();
+		//new manualEntry();
+		//new extendbook("1025859657");
 	}
 
 }

@@ -16,8 +16,8 @@ public class authBook extends Thread {
     public void run() {
         try {
             String rfidKey = "";
-            t1 = new RFID_Reader();
-            t2 = new RFID_Reader();
+            t1 = new RFID_Reader(false);
+            t2 = new RFID_Reader(false);
             t1.start();
             int count=0;
             while (true) {
@@ -70,7 +70,22 @@ public class authBook extends Thread {
                                 t2.stop();
                                 stop();
                             }
-                        } else {
+                        }else if (rs.getString("Availability").equals("0") && test == 2){
+                            JOptionPane.showMessageDialog(frame, "book Authenticated");
+                            count++;
+                            if (count == 1) {
+                                // for book 01
+                                extendbook.setBkText01(rfidKey);
+                                t1.stop();
+                                t2.start();
+                            } else {
+                                //for book 2
+                                extendbook.setBkText02(rfidKey);
+                                t2.stop();
+                                stop();
+                            }
+                        }
+                        else {
                             JOptionPane.showMessageDialog(frame, "Enter Valid Book");
 
                         }

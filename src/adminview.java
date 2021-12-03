@@ -43,6 +43,11 @@ public class adminview extends JFrame implements ActionListener {
 			this.dispose();
 			searchbook searchbook = new searchbook();
 		}
+		if(e.getSource() == lendbkBtn){// add search button
+			this.dispose();
+			new manualEntry();
+		}
+
 		
 		if(e.getSource()== exitBtn) {//exit button
 			int result = JOptionPane.showConfirmDialog(this,"Sure? You want to exit?", "Library System",
@@ -174,6 +179,7 @@ public class adminview extends JFrame implements ActionListener {
 		lendbkBtn.setBounds(0, 0, 175, 183);
 		lendbkBtn.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lendbkBtn.setHorizontalTextPosition(SwingConstants.CENTER);
+		lendbkBtn.addActionListener(this);
 		lendbkPanel.add(lendbkBtn);
 
 
