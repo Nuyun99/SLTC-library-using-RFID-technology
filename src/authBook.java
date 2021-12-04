@@ -5,6 +5,7 @@ import java.sql.*;
 public class authBook extends Thread {
     JFrame frame ;
     short test;
+    String bk01rfid="";
 
     public authBook(JFrame frame, short test) {
         this.frame = frame;
@@ -41,17 +42,27 @@ public class authBook extends Thread {
                     System.out.println("Searched SQL query: " + qry);
                     ResultSet rs = stmt.executeQuery(qry);
                     if (rs.next()) {
+                        if (bk01rfid.equals(rfidKey)){
+                            JOptionPane.showMessageDialog(frame, "You Cannot Lend Same Book twice");
+                            continue;
+                        }
+                        byte[] image = null;
+                        image = rs.getBytes("bookImg");
+                        Image img = Toolkit.getDefaultToolkit().createImage(image);
+                        ImageIcon bkcover = libMethod.scaledImg(img,263,339);
                         if (rs.getString("Availability").equals("1") && test == 0) {
                             JOptionPane.showMessageDialog(frame, "book Authenticated");
                             count++;
+
                             if (count == 1) {
                                 // for book 01
-                                lendBook.setBkText01(rfidKey);
+                                bk01rfid=rfidKey;
+                                lendBook.setBook01(rfidKey,bkcover);
                                 t1.stop();
                                 t2.start();
                             } else {
                                 //for book 2
-                                lendBook.setBkText02(rfidKey);
+                                lendBook.setBook02(rfidKey,bkcover);
                                 t2.stop();
                                 stop();
                             }
@@ -61,12 +72,13 @@ public class authBook extends Thread {
                             count++;
                             if (count == 1) {
                                 // for book 01
-                                returnBook.setBkText01(rfidKey);
+                                bk01rfid=rfidKey;
+                                returnBook.setBook01(rfidKey,bkcover);
                                 t1.stop();
                                 t2.start();
                             } else {
                                 //for book 2
-                                returnBook.setBkText02(rfidKey);
+                                returnBook.setBook02(rfidKey,bkcover);
                                 t2.stop();
                                 stop();
                             }
@@ -75,19 +87,19 @@ public class authBook extends Thread {
                             count++;
                             if (count == 1) {
                                 // for book 01
-                                extendbook.setBkText01(rfidKey);
+                                bk01rfid=rfidKey;
+                                extendbook.setBook01(rfidKey,bkcover);
                                 t1.stop();
                                 t2.start();
                             } else {
                                 //for book 2
-                                extendbook.setBkText02(rfidKey);
+                                extendbook.setBook02(rfidKey,bkcover);
                                 t2.stop();
                                 stop();
                             }
                         }
                         else {
                             JOptionPane.showMessageDialog(frame, "Enter Valid Book");
-
                         }
                     }
                 }

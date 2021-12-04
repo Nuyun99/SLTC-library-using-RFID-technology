@@ -47,16 +47,18 @@ public class searchbook extends JFrame implements ActionListener{
 						String qry = "SELECT * FROM `book_table` WHERE `Book Title` LIKE '%" + searchText.getText() + "%' OR `Book Author` like '%" + searchText.getText() + "%';";
 						System.out.println("Searched SQL query: " + qry);
 						ResultSet rs = stmt.executeQuery(qry);
-						if (rs.next()) {
+						byte[] image = null;
+						boolean matchingFound = false;
+						while (rs.next()) {
 							//have to get byte image from data_base.
-							ImageIcon test1 = new ImageIcon("nuhata.png"); // for get image to display in table.
-							Image image = test1.getImage();
-							Image newimg = image.getScaledInstance(58, 44,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-							ImageIcon test = new ImageIcon(newimg);
-
+							image = rs.getBytes("bookImg");
+							Image img = Toolkit.getDefaultToolkit().createImage(image);
+							ImageIcon test = libMethod.scaledImg(img,58,44);
 							model.addRow(new Object[]{test , rs.getString("Book Title"), rs.getString("Book Author"), rs.getString("Genre"), rs.getString("Edition"), rs.getString("RFID_NO"), rs.getString("Rack Number"), rs.getString("Section"), rs.getString("About")});
 							this.setVisible(true);
-						}else{
+							matchingFound = true;
+						}
+						if(!matchingFound){
 							JOptionPane.showMessageDialog(null, "No Matching Found");
 						}
 					}else{

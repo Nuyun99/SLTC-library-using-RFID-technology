@@ -24,21 +24,27 @@ public class extendbook extends JFrame implements ActionListener {
 
     private static JTextField bk02Text;
     private static JTextField bk02AuthText;
+    private static JLabel bookCov01;
+    private static JLabel bookCov02;
     private JButton backBtn;
     private JButton extendButton;
     private Float penalty = 0f;
     authBook auth1;
 
-    public static void setBkText01(String bookrfid1){
+    public static void setBook01(String bookrfid1 , ImageIcon cover){
         b1.getInfo(bookrfid1);
         bk01Text.setText(b1.getBookName());
         bk01AuthText.setText(b1.getBookAuthor());
+        bookCov01.setIcon(cover);
+        bookCov01.setOpaque(true);
         bookRfid1 = bookrfid1;
     }
-    public static void setBkText02(String bookrfid2){
+    public static void setBook02(String bookrfid2, ImageIcon cover){
         b2.getInfo(bookrfid2);
         bk02Text.setText(b2.getBookName());
         bk02AuthText.setText(b2.getBookAuthor());
+        bookCov02.setIcon(cover);
+        bookCov02.setOpaque(true);
         bookRfid2 = bookrfid2;
     }
 
@@ -103,7 +109,7 @@ public class extendbook extends JFrame implements ActionListener {
         txtLabel.setBounds(562, 278, 447, 38);
         getContentPane().add(txtLabel);
 
-        JLabel bookCov01 = new JLabel();
+        bookCov01 = new JLabel();
         bookCov01.setBackground(new Color(0x5B6C8B));
         bookCov01.setBounds(62, 368, 263, 339);
         bookCov01.setBorder(new LineBorder(new Color(0, 0, 0), 4));
@@ -123,7 +129,7 @@ public class extendbook extends JFrame implements ActionListener {
         bktwoLabel.setBounds(888, 338, 175, 20);
         getContentPane().add(bktwoLabel);
 
-        JLabel bookCov02 = new JLabel();
+        bookCov02 = new JLabel();
         bookCov02.setBorder(new LineBorder(new Color(0, 0, 0), 4));
         bookCov02.setBackground(new Color(91, 108, 139));
         bookCov02.setBounds(827, 368, 263, 339);
