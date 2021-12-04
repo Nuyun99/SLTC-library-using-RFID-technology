@@ -1,7 +1,6 @@
 
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
@@ -10,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
@@ -29,8 +29,9 @@ public class manualEntry extends JFrame implements ActionListener {
 	JButton srchBtn;
 	JButton visitBtn;
 	private JPasswordField rfidPassfield;
+	JLabel usrImgLabel;
 
-
+	ImageIcon usr = libMethod.scaledImg("user.png",100,100);
 
 	manualEntry(){
 		
@@ -65,10 +66,9 @@ public class manualEntry extends JFrame implements ActionListener {
 		upperLabel.setBounds(240, 29, 449, 64);
 		panel.add(upperLabel);
 
-		JLabel usrImgLabel = new JLabel();
-		usrImgLabel.setBounds(149, 29, 64, 64);
-		//usrImgLabel.setIcon(usr); //set icon method need to pass get icon 
-		usrImgLabel.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.WHITE, null, null, null));// just added border to show there is a JLabel.if want set null
+		usrImgLabel = new JLabel();
+		usrImgLabel.setBounds(129, 13, 100, 100);
+		usrImgLabel.setIcon(usr); //set icon method need to pass get icon
 		panel.add(usrImgLabel);
 
 		backBtn = new JButton();
@@ -280,7 +280,13 @@ public class manualEntry extends JFrame implements ActionListener {
 						rfidPassfield.setText(rs.getString("RFID_NO"));
 //						String totalPanalty = rs.getString("TotalPanalty");
 //						String lendedBooks = rs.getString("currentLendedBooks");
-
+//						byte[] image = null;
+//						image = rs.getBytes("userImg");
+//						Image img = Toolkit.getDefaultToolkit().createImage(image);
+//						usrImgLabel.setIcon(libMethod.scaledImg(img,100,100));
+//						usrImgLabel.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.WHITE, null, null, null));
+						//usrImgLabel.setIcon(libMethod.getRoundImg(libMethod.resize(ImageIO.read(rs.getBinaryStream("userImg")), 100, 100)));
+						usrImgLabel.setIcon(libMethod.ScaleSmooth(libMethod.getRoundImg(libMethod.resize(ImageIO.read(rs.getBinaryStream("userImg")), 100, 100)),100,100));
 						JOptionPane.showMessageDialog(null, "Generated SQL query: " + qry);
 						this.setVisible(true);
 					}else{
@@ -292,6 +298,8 @@ public class manualEntry extends JFrame implements ActionListener {
 						nicText.setText("");
 						dgreeText.setText("");
 						rfidPassfield.setText("");
+						usrImgLabel.setIcon(usr);
+						usrImgLabel.setBorder(null);
 						JOptionPane.showMessageDialog(null, "No Matching Found");
 					}
 				}catch(Exception exception){
@@ -307,6 +315,8 @@ public class manualEntry extends JFrame implements ActionListener {
 				nicText.setText("");
 				dgreeText.setText("");
 				rfidPassfield.setText("");
+				usrImgLabel.setIcon(usr);
+				usrImgLabel.setBorder(null);
 				JOptionPane.showMessageDialog(null, "Enter Valid Email or NIC Number");
 			}
 		}

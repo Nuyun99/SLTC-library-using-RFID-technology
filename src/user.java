@@ -1,4 +1,8 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.*;
 
 public class user {
@@ -12,6 +16,8 @@ public class user {
     private static String dgree;
     private static String totalpanalty;
     private static String curtLendedBooks;
+    private static BufferedImage userImage;
+
 
     public user(String userRfid) {
         this.userRfid = userRfid;
@@ -35,7 +41,7 @@ public class user {
                 dgree = rs.getString("Dgree");
                 totalpanalty = rs.getString("TotalPanalty");
                 curtLendedBooks = rs.getString("currentLendedBooks");
-                System.out.println("User Current Lended Books : "+ curtLendedBooks);
+                userImage = libMethod.resize(ImageIO.read(rs.getBinaryStream("userImg")),64,64);
             }
             else{
                 JOptionPane.showMessageDialog(null, "No Matching Found");
@@ -50,29 +56,10 @@ public class user {
                 totalpanalty = "";
                 curtLendedBooks = "";
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             e.printStackTrace();
         }
     }
-//    private String getName(String usrRfid){
-//        String name = "";
-//        try {
-//            Class.forName("java.sql.Driver");
-//            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbproject", "harindu123", "Zyco@123fuckinggood");
-//            Statement stmt = con.createStatement();
-//            String qry = "SELECT * FROM `user_table` WHERE `RFID_NO` LIKE '%" + usrRfid + "%';";
-//            System.out.println("Searched SQL query: " + qry);
-//            ResultSet rs = stmt.executeQuery(qry);
-//            if (rs.next()){
-//                name = rs.getString("User Name");
-//            }
-//
-//        } catch (ClassNotFoundException | SQLException e) {
-//            e.printStackTrace();
-//            name="";
-//        }
-//        return name;
-//    }
 
     public static String getUserName() {
         return userName;
@@ -113,4 +100,6 @@ public class user {
     public static String getCurtLendedBooks() {
         return curtLendedBooks;
     }
+
+    public static BufferedImage getUserImage() {return userImage; }
 }
