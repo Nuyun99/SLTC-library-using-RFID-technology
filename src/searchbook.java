@@ -10,6 +10,7 @@ import java.sql.Statement;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.io.*;
+import java.util.HashMap;
 
 public class searchbook extends JFrame implements ActionListener{
 	
@@ -18,6 +19,7 @@ public class searchbook extends JFrame implements ActionListener{
 	JButton backBtn;
 	JTable table;
 	DefaultTableModel model;
+	HashMap<Integer,String> TableRawRFID = new HashMap<>();
 
 	searchbook(){
 		frontEnd();
@@ -38,6 +40,9 @@ public class searchbook extends JFrame implements ActionListener{
 			this.dispose();
 			new adminview();
 		}
+//		if (){
+//
+//		}
 		if (e.getSource() == srchBtn){
 				try{
 					if (!searchText.getText().isEmpty()) {
@@ -49,14 +54,17 @@ public class searchbook extends JFrame implements ActionListener{
 						ResultSet rs = stmt.executeQuery(qry);
 						byte[] image = null;
 						boolean matchingFound = false;
+						int i=0;
 						while (rs.next()) {
 							//have to get byte image from data_base.
 							image = rs.getBytes("bookImg");
 							Image img = Toolkit.getDefaultToolkit().createImage(image);
 							ImageIcon test = libMethod.scaledImg(img,58,44);
-							model.addRow(new Object[]{test , rs.getString("Book Title"), rs.getString("Book Author"), rs.getString("Genre"), rs.getString("Edition"), rs.getString("RFID_NO"), rs.getString("Rack Number"), rs.getString("Section"), rs.getString("About")});
+							model.addRow(new Object[]{test , rs.getString("Book Title"), rs.getString("Book Author"), rs.getString("Genre"), rs.getString("Edition"), rs.getString("Rack Number"), rs.getString("Section"), rs.getString("About")});
+							TableRawRFID.put(i,rs.getString("RFID_NO"));
 							this.setVisible(true);
 							matchingFound = true;
+							i++;
 						}
 						if(!matchingFound){
 							JOptionPane.showMessageDialog(null, "No Matching Found");
@@ -81,7 +89,6 @@ public class searchbook extends JFrame implements ActionListener{
 		this.setBounds(100, 100, 895, 664);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(true);
-		//this.setResizable(true);
 		this.setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 
@@ -157,13 +164,10 @@ public class searchbook extends JFrame implements ActionListener{
 		getContentPane().add(scrollPane);
 
 		model = new DefaultTableModel(); // making model object in default table model class
-		Object[] coloumns = {"Picture" , "Book Title" ,"Author" , "Genre" , "Edition" , "RFID_NO"};//coloums as object data type .. if want to change string data type
+		Object[] coloumns = {"Picture" , "Book Title" ,"Author" , "Genre" , "Edition" , "Rack NO"};//coloums as object data type .. if want to change string data type
 		model.setColumnIdentifiers(coloumns); // pass our String array name
 
 		table = new JTable(model){
-
-
-
 			public boolean editCellAt(int row, int column, java.util.EventObject e) {//prevent from editing text in rows.
 				return false;
 			}
@@ -190,9 +194,17 @@ public class searchbook extends JFrame implements ActionListener{
 		table.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
 		table.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
 		table.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
-
 		table.setFont(new Font("Georgia",Font.BOLD,13));
 		scrollPane.setViewportView(table);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (table.getSelectedRow() > -1) {
+					new viewbook(TableRawRFID.get(table.getSelectedRow()));
+				}
+			}
+		});
+
 		this.setVisible(true);
 	}
 }

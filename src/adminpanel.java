@@ -1,6 +1,4 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -13,11 +11,13 @@ import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.sql.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JPasswordField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class adminpanel extends JFrame implements ActionListener  {//extend jframe class and actionlistener interface
 	
@@ -27,49 +27,25 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 	JSeparator passSeparator;
 	JSeparator usrSeparator;
 	JTextField usridField;
+	JTextField rfidField;
 	JPasswordField passwordField;
 	authUser auth1;
 
 	adminpanel(){
 		frontEnd();
-		auth1 = new authUser(this);
-		auth1.start();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==loginBtn) {
-			
 			String usr = usridField.getText();//making string variable and store text field user input
 			String passwd = passwordField.getText();
-			
 			if(usr.equals("admin") && passwd.equals("admin")) {//check user input equals with string
 				this.dispose();//when press button first frame will dispose
-				auth1.stop();
-				auth1.t1.stop();
 				new adminview();//if button triggers this join to our page
 			}
-//			else if(usr.equals("user") && passwd.equals("user")) {//check user input equals with string
-//
-//				this.dispose();//when press button first frame will dispose
-//				auth1.stop();
-//				auth1.t1.stop();
-//				new userPanel();//if button triggers this join to our page
-//			}
 			else {
 				JOptionPane.showMessageDialog(this, "Invalid Username or Password");
-//				this.dispose();
-//				t1.stop();
-//				int result = JOptionPane.showConfirmDialog(this,"Sure? You want to enter?", "Testing Box",
-//						JOptionPane.YES_NO_OPTION,
-//						JOptionPane.QUESTION_MESSAGE);
-//				if(result == JOptionPane.YES_OPTION){
-//					new adminview();
-//				}else if (result == JOptionPane.NO_OPTION){
-//					new userPanel();
-//				}else {
-//					new adminpanel();
-//				}
 			}
 		}
 	}
@@ -92,14 +68,9 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximize both
 		this.setUndecorated(true);//maximize both
 		this.setLocationRelativeTo(null);
-		//this.pack();
-//		this.setVisible(true);
-
-		//this.pack();
 		this.getContentPane().setLayout(null);//set frame layout as absolute layout
 
 		Border border = BorderFactory.createLineBorder(Color.green,3);//create border object
-		//txtLabel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.GREEN));
 
 		JLabel gifLabel = new JLabel();
 		gifLabel.setBackground(new Color(192, 192, 192));
@@ -124,8 +95,6 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 		txtLabel.setText("Manual Login Panel");
 		txtLabel.setForeground(Color.WHITE);//font color
 		txtLabel.setFont(new Font("Myanmar Text", Font.BOLD, 41));//set font style,font type and size
-		//txtLabel.setBackground(Color.GRAY);//set background color of label as gray
-		//txtLabel.setOpaque(true);//visible background colour of label
 		txtLabel.setVerticalTextPosition(JLabel.TOP);//position text
 		txtLabel.setHorizontalTextPosition(SwingConstants.LEADING);//position text
 
@@ -134,7 +103,6 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 		iconLabel.setForeground(Color.WHITE);
 		iconLabel.setIcon(usrIcon);//add user icon to label
 		loginPanel.add(iconLabel);
-
 
 		usridLabel = new JLabel("User ID");//user id label
 		usridLabel.setForeground(Color.LIGHT_GRAY);
@@ -159,6 +127,37 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 		passSeparator.setBounds(46, 573, 323, 14);
 		loginPanel.add(passSeparator);
 
+		rfidField = new JTextField();
+		rfidField.setForeground(Color.DARK_GRAY);
+		rfidField.setBounds(42, 300, 323, 39);
+		rfidField.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
+		rfidField.setCaretColor(Color.DARK_GRAY);
+		rfidField.setBackground(Color.DARK_GRAY);
+		rfidField.setBorder(null);
+		rfidField.setDocument(new libMethod.JTextFieldLimit(10));
+		loginPanel.add(rfidField);
+		rfidField.setColumns(10);
+		JFrame frame = this;
+		rfidField.getDocument().addDocumentListener(new DocumentListener() {
+			boolean a;
+			public void changedUpdate(DocumentEvent e) {
+				frame.dispose();
+				new adminpanel();
+
+			}
+			public void removeUpdate(DocumentEvent e) {
+				frame.dispose();
+				new adminpanel();
+
+			}
+			public void insertUpdate(DocumentEvent e) {
+				if (rfidField.getText().length() == 10) {
+					auth1 = new authUser(frame, rfidField.getText());
+					auth1.start();
+					a=true;
+				}
+			}
+		});
 
 		usridField = new JTextField();
 		usridField.setForeground(Color.WHITE);
@@ -167,18 +166,36 @@ public class adminpanel extends JFrame implements ActionListener  {//extend jfra
 		usridField.setCaretColor(Color.WHITE);
 		usridField.setBackground(Color.DARK_GRAY);
 		usridField.setBorder(null);
+		usridField.addMouseListener(new MouseAdapter(){//from this method whenever user click on text field already set text will dissapear
+			@Override
+			public void mouseExited(MouseEvent e){
+				usridField.setEditable(false);
+				rfidField.requestFocus(true);
+			}
+			public void mouseEntered(MouseEvent e){
+				usridField.setEditable(true);
+			}
+
+		});
 		loginPanel.add(usridField);
 		usridField.setColumns(10);
-
 		passwordField = new JPasswordField();
 		passwordField.setForeground(Color.WHITE);
 		passwordField.setCaretColor(Color.WHITE);
 		passwordField.setBackground(Color.DARK_GRAY);
 		passwordField.setBounds(46, 531, 323, 39);
 		passwordField.setBorder(null);
+		passwordField.addMouseListener(new MouseAdapter(){//from this method whenever user click on text field already set text will dissapear
+			@Override
+			public void mouseExited(MouseEvent e){
+				passwordField.setEditable(false);
+				rfidField.requestFocus(true);
+			}
+			public void mouseEntered(MouseEvent e){
+				passwordField.setEditable(true);
+			}
+		});
 		loginPanel.add(passwordField);
-
-
 		loginBtn = new JButton("LOGIN");
 		loginBtn.setBounds(234, 632, 131, 39);
 		loginPanel.add(loginBtn);

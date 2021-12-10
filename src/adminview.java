@@ -24,17 +24,14 @@ public class adminview extends JFrame implements ActionListener {
 			this.dispose();
 			adminpanel panel2 = new adminpanel();
 		}
-
 		if(e.getSource()== addbkBtn) {//add book button
 			this.dispose();
 			addbook book = new addbook();
 		}
-		
 		if(e.getSource()==addusrBtn) {// add user button
 			this.dispose();
 			adduser user = new adduser();
 		}
-		
 		if(e.getSource()==delusrBtn) {// add user button
 			this.dispose();
 			updateuser userDel = new updateuser();
@@ -47,8 +44,6 @@ public class adminview extends JFrame implements ActionListener {
 			this.dispose();
 			new manualEntry();
 		}
-
-		
 		if(e.getSource()== exitBtn) {//exit button
 			int result = JOptionPane.showConfirmDialog(this,"Sure? You want to exit?", "Library System",
 					JOptionPane.YES_NO_OPTION,

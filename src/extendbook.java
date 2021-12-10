@@ -53,7 +53,7 @@ public class extendbook extends JFrame implements ActionListener {
         initialize();
         System.out.println(" user RFID "+userRfid);
         this.setVisible(true);
-        auth1 = new authBook(this, (short) 2);
+        auth1 = new authBook(this, (short) 2,usrRfid);
         auth1.start();
 
     }
@@ -237,8 +237,6 @@ public class extendbook extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
         if (e.getSource() == backBtn) {
-            auth1.t1.stop();
-            auth1.t2.stop();
             auth1.stop();
             this.dispose();
             new userPanel(userRfid);
