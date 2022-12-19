@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\HP\Desktop\Library_System.jar</jar>
+  <outfile>C:\Users\HP\Desktop\alpha bytes\1.1.0.0\LibraryAutomationSystem.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>high</priority>
+  <downloadUrl>https://www.oracle.com/java/technologies/javase/jdk16-archive-downloads.html</downloadUrl>
+  <supportUrl>https://github.com/Nuyun99/SLTC-library-using-RFID-technology</supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>true</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\HP\Downloads\picsart_21_11_26_22_48_22_436_JME_icon.ico</icon>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>16</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.0.0.1</fileVersion>
+    <txtFileVersion>1.0.0.0</txtFileVersion>
+    <fileDescription>Automation Library System For Library Using RFID Technology</fileDescription>
+    <copyright>Alpha Bytes</copyright>
+    <productVersion>1.0.0.1</productVersion>
+    <txtProductVersion>1.0.0.0</txtProductVersion>
+    <productName>Automation Library System by Alpha Bytes</productName>
+    <companyName>Alpha Bytes</companyName>
+    <internalName>LibraryAutomationSystem</internalName>
+    <originalFilename>LibraryAutomationSystem.exe</originalFilename>
+    <trademarks>Alpha Bytes</trademarks>
+    <language>ENGLISH_US</language>
+  </versionInfo>
+</launch4jConfig>
