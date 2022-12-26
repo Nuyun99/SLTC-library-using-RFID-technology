@@ -1,6 +1,7 @@
 Implementing a fully automatic system for SLTC library using RFID technology.
 =
->completed date: 12.12.2021
+    completed date: 12.12.2021
+<img src=https://github.com/Nuyun-Kalamullage/SLTC-library-Automation-using-RFID-technology/blob/Origin/library%20System.png>
 
 HOW TO RUN
 =
